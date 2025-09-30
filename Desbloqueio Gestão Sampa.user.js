@@ -28,7 +28,7 @@
             if (window.location.hash === '#/home') {
                 window.location.replace('muppos');
             }
-        }, 5000); // 5 segundos
+        }, 10000); // 10 segundos
     }
 
     function cancelRedirectOnClick(event) {
