@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Desbloqueio Gestão Sampa
 // @namespace    http://tampermonkey.net/
-// @version      2025.1
+// @version      2025.2
 // @description  Redireciona ao PDV e ajusta layout Gestão Sampa, com redirecionamento inteligente
 // @match        https://*/muppos/*
 // @match        https://*/index.html
