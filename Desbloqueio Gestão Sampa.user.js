@@ -1,11 +1,10 @@
 // ==UserScript==
 // @name         Desbloqueio Gestão Sampa
 // @namespace    http://tampermonkey.net/
-// @version      2025.2
+// @version      2026.1
 // @description  Redireciona ao PDV e ajusta layout Gestão Sampa, com redirecionamento inteligente
 // @match        https://*/muppos/*
-// @match        https://*/index.html
-// @match        https://*/index-adesampa.html
+// @include        */*gestaosampa*
 // @match        https://*.marketup.com/*
 // @updateURL    https://raw.githubusercontent.com/eriandsonazevedo/Sampa/main/Desbloqueio%20Gest%C3%A3o%20Sampa.user.js
 // @downloadURL  https://raw.githubusercontent.com/eriandsonazevedo/Sampa/main/Desbloqueio%20Gest%C3%A3o%20Sampa.user.js
@@ -13,78 +12,4 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
-    'use strict';
-
-    // ----------------------------
-    // 1️⃣ Redirecionamento Inteligente
-    // ----------------------------
-
-    let redirectTimeout;
-
-    function scheduleRedirect() {
-        clearTimeout(redirectTimeout);
-        redirectTimeout = setTimeout(() => {
-            if (window.location.hash === '#/home') {
-                window.location.replace('muppos');
-            }
-        }, 10000); // 10 segundos
-    }
-
-    function cancelRedirectOnClick(event) {
-        // Cancela se clicar em <li> com id
-        if (event.target.closest('li[id]')) {
-            clearTimeout(redirectTimeout);
-        }
-    }
-
-    // Executa apenas após carregamento completo da página
-    window.addEventListener('load', () => {
-        scheduleRedirect();
-        document.addEventListener('click', cancelRedirectOnClick);
-    });
-
-    // Observa mudanças na URL (frameworks SPA)
-    window.addEventListener('hashchange', scheduleRedirect);
-
-    // ----------------------------
-    // 2️⃣ Desbloqueio Gestão Sampa
-    // ----------------------------
-
-    function executarAcoes() {
-        let pdvInfo = JSON.parse(localStorage.getItem('PdvInstallSummaryInfo')) || {};
-        let alterado = false;
-
-        if (pdvInfo.SourceID !== 79) {
-            pdvInfo.SourceID = 79;
-            alterado = true;
-        }
-        if (pdvInfo.SourceName !== "Adesampa") {
-            pdvInfo.SourceName = "Adesampa";
-            alterado = true;
-        }
-
-        if (alterado) {
-            localStorage.setItem('PdvInstallSummaryInfo', JSON.stringify(pdvInfo));
-        }
-    }
-
-    // Executa imediatamente
-    executarAcoes();
-
-    // Observa mudanças no DOM
-    const observer = new MutationObserver(executarAcoes);
-    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
-
-    // Observa mudanças de URL
-    let ultimaUrl = location.href;
-    setInterval(() => {
-        if (location.href !== ultimaUrl) {
-            ultimaUrl = location.href;
-            executarAcoes();
-        }
-    }, 500);
-
-    window.addEventListener('popstate', executarAcoes);
-
-})();
+function _0x479f(){const _0x493b82=['mJq0yLL2yuHR','ntaZmJC2uMPLq0rv','mte0nuryy2ffta','mtq3mZyWmenoBu9tvq','B2jZzxj2zq','mJC5mZLMqM9xse4','qwrLC2fTCge','u291CMnLsuq','C3rYAw5NAwz5','AhjLzG','mtb0B3fluvO','ntm1mZm1m29XtwTjqG','mJu4CuTut1DA','C2v0sxrLBq','Cg9WC3rHDgu','ugr2sw5ZDgfSBfn1Bw1HCNLjBMzV','mJi2mZK4oxDfBuvoDG','nJu2nty2qvLjwvLu'];_0x479f=function(){return _0x493b82;};return _0x479f();}function _0x4832(_0x29a85d,_0x2ea18b){_0x29a85d=_0x29a85d-0xe3;const _0x479f58=_0x479f();let _0x48320e=_0x479f58[_0x29a85d];if(_0x4832['BwxsGs']===undefined){var _0x1c4f7b=function(_0x57511e){const _0x7fd13d='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x42d7cc='',_0x108013='';for(let _0x528555=0x0,_0x3fb78a,_0x4b3247,_0x15f29d=0x0;_0x4b3247=_0x57511e['charAt'](_0x15f29d++);~_0x4b3247&&(_0x3fb78a=_0x528555%0x4?_0x3fb78a*0x40+_0x4b3247:_0x4b3247,_0x528555++%0x4)?_0x42d7cc+=String['fromCharCode'](0xff&_0x3fb78a>>(-0x2*_0x528555&0x6)):0x0){_0x4b3247=_0x7fd13d['indexOf'](_0x4b3247);}for(let _0x56c32a=0x0,_0x492d11=_0x42d7cc['length'];_0x56c32a<_0x492d11;_0x56c32a++){_0x108013+='%'+('00'+_0x42d7cc['charCodeAt'](_0x56c32a)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x108013);};_0x4832['iAfWgV']=_0x1c4f7b,_0x4832['Aaudvz']={},_0x4832['BwxsGs']=!![];}const _0x1becad=_0x479f58[0x0],_0x52342f=_0x29a85d+_0x1becad,_0x312a6e=_0x4832['Aaudvz'][_0x52342f];return!_0x312a6e?(_0x48320e=_0x4832['iAfWgV'](_0x48320e),_0x4832['Aaudvz'][_0x52342f]=_0x48320e):_0x48320e=_0x312a6e,_0x48320e;}(function(_0x58619f,_0x2957ac){const _0x405b28=_0x4832,_0x1ad90a=_0x58619f();while(!![]){try{const _0x6bff38=parseInt(_0x405b28(0xf2))/0x1+parseInt(_0x405b28(0xf0))/0x2+parseInt(_0x405b28(0xe4))/0x3*(parseInt(_0x405b28(0xf1))/0x4)+-parseInt(_0x405b28(0xf3))/0x5*(-parseInt(_0x405b28(0xeb))/0x6)+-parseInt(_0x405b28(0xef))/0x7+-parseInt(_0x405b28(0xf4))/0x8+parseInt(_0x405b28(0xea))/0x9*(-parseInt(_0x405b28(0xe9))/0xa);if(_0x6bff38===_0x2957ac)break;else _0x1ad90a['push'](_0x1ad90a['shift']());}catch(_0x43708f){_0x1ad90a['push'](_0x1ad90a['shift']());}}}(_0x479f,0x4af6f),(function(){'use strict';const _0x4d735c=_0x4832;function _0x42d7cc(){const _0x5ba469=_0x4832;let _0x3fb78a=JSON['parse'](localStorage['getItem'](_0x5ba469(0xee)))||{},_0x4b3247=![];_0x3fb78a['SourceID']!==0x4f&&(_0x3fb78a[_0x5ba469(0xe6)]=0x4f,_0x4b3247=!![]),_0x3fb78a['SourceName']!==_0x5ba469(0xe5)&&(_0x3fb78a['SourceName']=_0x5ba469(0xe5),_0x4b3247=!![]),_0x4b3247&&localStorage[_0x5ba469(0xec)]('PdvInstallSummaryInfo',JSON[_0x5ba469(0xe7)](_0x3fb78a));}_0x42d7cc();const _0x108013=new MutationObserver(_0x42d7cc);_0x108013[_0x4d735c(0xe3)](document['body'],{'childList':!![],'subtree':!![],'attributes':!![]});let _0x528555=location[_0x4d735c(0xe8)];setInterval(()=>{const _0x3ebea0=_0x4d735c;location[_0x3ebea0(0xe8)]!==_0x528555&&(_0x528555=location['href'],_0x42d7cc());},0x1f4),window['addEventListener'](_0x4d735c(0xed),_0x42d7cc);}()));
